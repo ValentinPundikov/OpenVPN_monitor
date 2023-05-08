@@ -28,8 +28,12 @@ dp = Dispatcher(bot, storage=storage)
 
 
 def start_server():
-    result = subprocess.call(['bash', 'start_server.sh'])
-    return result
+    command = 'bash ./start_server.sh'
+    pipe = os.popen(command)
+
+    return pipe.read()
+    # result = subprocess.call(['bash', 'start_server.sh'])
+    # return result
 
 
 
@@ -85,7 +89,6 @@ async def button1_handler(message: Message):
 @dp.message_handler(filters.IDFilter(user_id=869031863), text='Запустить сервер')
 async def button_checkuot_handler(message: Message):
     user_id = message.from_user.id
-    start_server()
     markup = ReplyKeyboardMarkup(keyboard=keyboard, resize_keyboard=True, one_time_keyboard=True)
     await bot.send_message(chat_id=user_id, text=str(start_server()), reply_markup=markup,
                            parse_mode=ParseMode.MARKDOWN)
