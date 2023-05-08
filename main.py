@@ -17,7 +17,7 @@ import subprocess
 logging.basicConfig(level=logging.INFO)
 
 # инициализация бота
-bot = Bot(token='6226522935:AAEsccDKhphF9NTKHhQyfdr_eQZEuasAJqA')
+bot = Bot(token='')
 # инициализация диспетчера
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
