@@ -25,8 +25,12 @@ dp = Dispatcher(bot, storage=storage)
 # В этой функции мы должны получить список подключаемых устройств, а так же отключаемых, и после выполнения команды
 # сохранять структуру данных в отдельном файле: неделя, месяц, год, время, подключался-отключался, внешний IP, IP туннеля
 
-
-
+def get_connected():
+    command = 'bash ./get_connected.sh'
+    pipe = os.popen(command)
+    return pipe.read()
+    # result = subprocess.call(['bash', 'start_server.sh'])
+    # return result
 def start_server():
     command = 'bash ./start_server.sh'
     pipe = os.popen(command)
@@ -68,21 +72,10 @@ async def start_command_handler(message: types.Message):
 
 
 @dp.message_handler(filters.IDFilter(user_id=869031863), text='Получить список подключаемых устройств')
-async def devices_command(message: types.Message):
-    # Здесь мы используем subprocess для выполнения команды OpenVPN сервера
-    # и получения списка устройств, подключенных к серверу
-    command_output = subprocess.check_output(['sudo','netstat', '-tnp'])
-
-    # Обработка вывода команды и формирование сообщения для отправки пользователю
-    device_list = [line.split(",")[0] for line in command_output.decode().split("\n")[1:-1]]
-    message_text = "Список устройств, подключенных к OpenVPN серверу:\n\n"
-    for device in device_list:
-        message_text += f"- {device}\n"
-
-    # Отправка сообщения с списком устройств пользователю
-    await message.reply(message_text, parse_mode=ParseMode.MARKDOWN)
+async def button1_handler(message: Message):
+    user_id = message.from_user.id
     markup = ReplyKeyboardMarkup(keyboard=keyboard, resize_keyboard=True, one_time_keyboard=True)
-    await bot.send_message(chat_id=user_id, text='Получить список подключаемых устройств', reply_markup=markup,
+    await bot.send_message(chat_id=user_id, text=str(get_connected()), reply_markup=markup,
                            parse_mode=ParseMode.MARKDOWN)
 
 @dp.message_handler(filters.IDFilter(user_id=869031863), text='Остановить сервер')
