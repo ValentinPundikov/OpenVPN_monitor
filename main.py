@@ -60,7 +60,7 @@ async def start_command_handler(message: types.Message):
 async def devices_command(message: types.Message):
     # Здесь мы используем subprocess для выполнения команды OpenVPN сервера
     # и получения списка устройств, подключенных к серверу
-    command_output = subprocess.check_output(['sudo', 'openvpn', '--status', '2'])
+    command_output = subprocess.check_output(['sudo','netstat', '-tnp'])
 
     # Обработка вывода команды и формирование сообщения для отправки пользователю
     device_list = [line.split(",")[0] for line in command_output.decode().split("\n")[1:-1]]
