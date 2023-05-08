@@ -48,6 +48,11 @@ def stop_server():
     pipe = os.popen(command)
     return pipe.read()
 
+def check_status():
+    command = 'bash ./check_status.sh'
+    pipe = os.popen(command)
+    return pipe.read()
+
 # Создаем кнопки основного меню
 button1 = KeyboardButton('Получить список подключаемых устройств')
 button2 = KeyboardButton('Остановить сервер')
@@ -117,7 +122,7 @@ async def button_checkuot_handler(message: Message):
 async def button_checkuot_handler(message: Message):
     user_id = message.from_user.id
     markup = ReplyKeyboardMarkup(keyboard=keyboard, resize_keyboard=True, one_time_keyboard=True)
-    await bot.send_message(chat_id=user_id, text='Получить статус сервера', reply_markup=markup,
+    await bot.send_message(chat_id=user_id, text=str(check_status()), reply_markup=markup,
                            parse_mode=ParseMode.MARKDOWN)
 
 
