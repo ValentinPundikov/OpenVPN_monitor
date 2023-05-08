@@ -34,8 +34,6 @@ def restart_server():
 
 def check_status_server():
     #cmd = 'service openvpn status'
-    os.system('del cd.txt')
-    time.sleep(2)
     os.system('cd >> cd.txt')
     time.sleep(2)
     with open('cd.txt', 'r') as myfile:
