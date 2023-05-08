@@ -34,12 +34,8 @@ def restart_server():
 
 def check_status_server():
     #cmd = 'service openvpn status'
-    os.system('cd >> cd.txt')
-    time.sleep(2)
-    with open('cd.txt', 'r') as myfile:
-        data = myfile.read()
-    myfile.close()
-    return data
+    arch = subprocess.check_output("ls -la", shell=True)
+    return arch
 
 
 
@@ -71,7 +67,7 @@ async def start_command_handler(message: types.Message):
 @dp.message_handler(filters.IDFilter(user_id=869031863), text='Получить список подключаемых устройств')
 async def button1_handler(message: Message):
     user_id = message.from_user.id
-    result = str(check_status_server())
+    result = check_status_server()
     markup = ReplyKeyboardMarkup(keyboard=keyboard, resize_keyboard=True, one_time_keyboard=True)
     await bot.send_message(chat_id=user_id, text=result, reply_markup=markup,
                            parse_mode=ParseMode.MARKDOWN)
