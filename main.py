@@ -30,7 +30,6 @@ dp = Dispatcher(bot, storage=storage)
 def start_server():
     command = 'bash ./start_server.sh'
     pipe = os.popen(command)
-
     return pipe.read()
     # result = subprocess.call(['bash', 'start_server.sh'])
     # return result
