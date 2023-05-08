@@ -22,28 +22,16 @@ bot = Bot(token='6226522935:AAEsccDKhphF9NTKHhQyfdr_eQZEuasAJqA')
 storage = MemoryStorage()
 dp = Dispatcher(bot, storage=storage)
 
-
-
-def restart_server():
-    # restart = os.system("service openvpn restart")
-    arch = subprocess.check_output("cd", shell=True)
-
-    return arch
+# В этой функции мы должны получить список подключаемых устройств, а так же отключаемых, и после выполнения команды
+# сохранять структуру данных в отдельном файле: неделя, месяц, год, время, подключался-отключался, внешний IP, IP туннеля
 
 
 
-def check_status_server():
-    #cmd = 'service openvpn status'
-    os.system('cd >> cd.txt')
-    time.sleep(2)
-    with open('cd.txt', 'r') as myfile:
-        data = myfile.read()
-    myfile.close()
-    return data
+def gen_sert():
+    arg1 = "1"
+    arg2 = "new_comp"
 
-
-
-
+    subprocess.call(['bash', 'openvpn-config.sh', arg1, arg2])
 
 # Создаем кнопки основного меню
 button1 = KeyboardButton('Получить список подключаемых устройств')
@@ -71,9 +59,8 @@ async def start_command_handler(message: types.Message):
 @dp.message_handler(filters.IDFilter(user_id=869031863), text='Получить список подключаемых устройств')
 async def button1_handler(message: Message):
     user_id = message.from_user.id
-    result = str(check_status_server())
     markup = ReplyKeyboardMarkup(keyboard=keyboard, resize_keyboard=True, one_time_keyboard=True)
-    await bot.send_message(chat_id=user_id, text=result, reply_markup=markup,
+    await bot.send_message(chat_id=user_id, text='Получить список подключаемых устройств', reply_markup=markup,
                            parse_mode=ParseMode.MARKDOWN)
 
 @dp.message_handler(filters.IDFilter(user_id=869031863), text='Остановить сервер')
@@ -105,6 +92,7 @@ async def button_checkuot_handler(message: Message):
 @dp.message_handler(filters.IDFilter(user_id=869031863), text='Получить новый конфигурационный файл')
 async def button_checkuot_handler(message: Message):
     user_id = message.from_user.id
+    gen_sert()
     markup = ReplyKeyboardMarkup(keyboard=keyboard, resize_keyboard=True, one_time_keyboard=True)
     await bot.send_message(chat_id=user_id, text='Получить новый конфигурационный файл', reply_markup=markup,
                            parse_mode=ParseMode.MARKDOWN)
