@@ -34,7 +34,15 @@ def start_server():
     # result = subprocess.call(['bash', 'start_server.sh'])
     # return result
 
+def restart_server():
+    command = 'bash ./restart_server.sh'
+    pipe = os.popen(command)
+    return pipe.read()
 
+def stop_server():
+    command = 'bash ./stop_server.sh'
+    pipe = os.popen(command)
+    return pipe.read()
 
 # Создаем кнопки основного меню
 button1 = KeyboardButton('Получить список подключаемых устройств')
