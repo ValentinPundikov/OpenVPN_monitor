@@ -27,11 +27,11 @@ dp = Dispatcher(bot, storage=storage)
 
 
 
-def gen_sert():
-    arg1 = "1"
-    arg2 = "new_comp"
+def start_server():
+    result = subprocess.call(['bash', 'start_server.sh'])
+    return result
 
-    subprocess.call(['bash', 'openvpn-config.sh', arg1, arg2])
+
 
 # Создаем кнопки основного меню
 button1 = KeyboardButton('Получить список подключаемых устройств')
@@ -85,8 +85,9 @@ async def button1_handler(message: Message):
 @dp.message_handler(filters.IDFilter(user_id=869031863), text='Запустить сервер')
 async def button_checkuot_handler(message: Message):
     user_id = message.from_user.id
+    start_server()
     markup = ReplyKeyboardMarkup(keyboard=keyboard, resize_keyboard=True, one_time_keyboard=True)
-    await bot.send_message(chat_id=user_id, text='Запустить сервер', reply_markup=markup,
+    await bot.send_message(chat_id=user_id, text=str(start_server()), reply_markup=markup,
                            parse_mode=ParseMode.MARKDOWN)
 
 
