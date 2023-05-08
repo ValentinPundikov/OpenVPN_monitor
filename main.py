@@ -89,7 +89,7 @@ async def devices_command(message: types.Message):
 async def button1_handler(message: Message):
     user_id = message.from_user.id
     markup = ReplyKeyboardMarkup(keyboard=keyboard, resize_keyboard=True, one_time_keyboard=True)
-    await bot.send_message(chat_id=user_id, text='Остановить сервер', reply_markup=markup,
+    await bot.send_message(chat_id=user_id, text=str(stop_server()), reply_markup=markup,
                            parse_mode=ParseMode.MARKDOWN)
 
 
@@ -106,7 +106,7 @@ async def button_checkuot_handler(message: Message):
 async def button_checkuot_handler(message: Message):
     user_id = message.from_user.id
     markup = ReplyKeyboardMarkup(keyboard=keyboard, resize_keyboard=True, one_time_keyboard=True)
-    await bot.send_message(chat_id=user_id, text='Перезагрузить сервер', reply_markup=markup,
+    await bot.send_message(chat_id=user_id, text=str(restart_server()), reply_markup=markup,
                            parse_mode=ParseMode.MARKDOWN)
 
 
